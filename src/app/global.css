@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* body {
+  max-width: 85.375rem;
+  margin: 0 auto;
+} */
+
+input{
+  width: 100% !important;
+  padding-left: 7% !important;
+  padding-right: 4% !important;
+}
