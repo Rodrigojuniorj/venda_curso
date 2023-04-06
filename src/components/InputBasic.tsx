@@ -1,7 +1,5 @@
-import { CpfMask } from '@/utils/Mascaras';
-import { FormControl } from '@mui/material';
 import TextField from '@mui/material/TextField';
-
+import InputMask from 'react-input-mask';
 
 interface InputBaseProps {
   id: string;
@@ -13,23 +11,33 @@ interface InputBaseProps {
 
 export function InputBasic({ id, label, mask, variant = "outlined", type = "text" }: InputBaseProps){
   
-  function inputMask(){
+  function maskInput(){
     if(mask === "cpf"){
-      return CpfMask
+      return "999.999.999-99"
     }
+    return ''
   }
   
   return (
-    <TextField 
-      id={id} 
-      label={label}
-      variant={variant}
-      type={type}
-      color="secondary"
-      InputProps={{
-        inputComponent: inputMask(),
+    <InputMask
+      mask={maskInput()}
+      // value={value}
+      // onChange={handleChange}
+      // onBlur={handleBlur}
+    >
+      {(inputProps: any) => {
+        return (
+          <TextField
+            id={id}
+            label={label}
+            variant={variant}
+            type={type}
+            color="secondary"
+            fullWidth
+            {...inputProps} />
+        );
       }}
-      fullWidth
-    />
+    </InputMask>
+    
   )
 }
