@@ -163,7 +163,8 @@ export function Header() {
       flexGrow: 1,
     }}>
       <AppBar 
-       position="static">
+       position="static"
+       color="custom">
         <Toolbar sx={{
           padding: '0 !important',
           maxWidth: '85.375rem',
