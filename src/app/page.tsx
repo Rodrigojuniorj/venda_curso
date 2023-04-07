@@ -47,6 +47,10 @@ export default function BasicTabs() {
     setValue(newValue);
   };
 
+  function handleSubmitInstrutor(){
+    console.log('submit')
+  }
+
   return (
     <Box sx={{ 
       marginTop: "1rem !important",
@@ -64,7 +68,7 @@ export default function BasicTabs() {
       </Box>
       <TabPanel value={value} index={0}>
         <Forms>
-          <FormIntrutor />
+          <FormIntrutor handleSubmitInstrutor={handleSubmitInstrutor} />
         </Forms>
       </TabPanel>
       <TabPanel value={value} index={1}>
