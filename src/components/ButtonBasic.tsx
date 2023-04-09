@@ -7,9 +7,10 @@ interface InputBaseProps {
   variant?: 'contained' | 'outlined' | 'text' ;
   color?: 'error' | "info" | "success" | "primary" | "secondary" | "warning"
   type?: "button" | "submit" | "reset" 
+  sx: any
 }
 
-export function ButtonBasic({ texto, variant = "contained", color = "primary", type = "button", ...rest }: InputBaseProps){
+export function ButtonBasic({ texto, variant = "contained", color = "primary", type = "button", sx, ...rest }: InputBaseProps){
   return (
     <Button 
       variant={variant}
@@ -17,6 +18,7 @@ export function ButtonBasic({ texto, variant = "contained", color = "primary", t
       fullWidth
       {...rest}
       type={type}
+      sx={sx}
     >
       {texto}
     </Button>

@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Forms } from '@/components/Form/Forms';
 import { FormIntrutor } from '@/components/Form/FormInstrutor';
+import { Grid } from '@mui/material';
+import { TableInstrutor } from '@/components/Table/TableInstrutor';
 
 interface TabPanelProps {
   children?: ReactNode;
@@ -42,14 +44,11 @@ function tabProps(index: number) {
 
 export default function BasicTabs() {
   const [value, setValue] = useState(0);
+  const [atualizaInstrutor, setAtualizaInstrutor] = useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
-  function handleSubmitInstrutor(){
-    console.log('submit')
-  }
 
   return (
     <Box sx={{ 
@@ -68,8 +67,13 @@ export default function BasicTabs() {
       </Box>
       <TabPanel value={value} index={0}>
         <Forms>
-          <FormIntrutor handleSubmitInstrutor={handleSubmitInstrutor} />
+          <FormIntrutor setAtualizaInstrutor={setAtualizaInstrutor} />
         </Forms>
+        <Grid container sx={{
+          marginTop: '5rem'
+        }} >
+          <TableInstrutor atualizaInstrutor={atualizaInstrutor} setAtualizaInstrutor={setAtualizaInstrutor} />
+        </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
