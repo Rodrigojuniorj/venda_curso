@@ -4,20 +4,32 @@ import { use, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Controller, useForm } from 'react-hook-form';
-import { Button, TextField } from  '@mui/material'
+import { Button, TextField } from '@mui/material'
 import axios from 'axios'
+import { TableInstrutor } from '../Table/TableInstrutor';
 
 const instrutorFormSchema = z.object({
+  codigo: z.number().optional(),
   nome: z.string().min(3, { message: 'O nome precisa ter pelomenos 3 letras' }),
   cpf: z.string().min(3, { message: 'O cpf precisa ter pelomenos 3 letras' }),
 })
-type InstrutorFormData = z.infer<typeof instrutorFormSchema>
+export type InstrutorFormData = z.infer<typeof instrutorFormSchema>
 
-interface FormInstrutorProps{
-  setAtualizaInstrutor: (state: boolean) => void;
+type InstrutorProps = {
+  codigo: number;
+  nome: string;
+  cpf: string;
 }
 
-export function FormIntrutor({ setAtualizaInstrutor }: FormInstrutorProps){
+interface FormInstrutorProps {
+  atualizaInstrutor: boolean;
+  setAtualizaInstrutor: (state: boolean) => void;
+  setAttInstrutor: (Props: InstrutorProps ) => void;
+}
+
+export function FormIntrutor({ setAtualizaInstrutor, atualizaInstrutor, setAttInstrutor }: FormInstrutorProps) {
+  const [clickUpdate, setClickUpdate] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -25,56 +37,80 @@ export function FormIntrutor({ setAtualizaInstrutor }: FormInstrutorProps){
     formState: { errors, isSubmitting },
   } = useForm<InstrutorFormData>({
     resolver: zodResolver(instrutorFormSchema),
+    defaultValues: {
+      nome: '',
+      cpf: ''
+    }
   })
 
   const onSubmit = async (data: InstrutorFormData) => {
-    await axios.post('/api/instrutor', {
-      nome: data.nome,
-      cpf: data.cpf
-    })
-    .then(function (response) {
-      reset()
-      setAtualizaInstrutor(true)
-    })
+    if(clickUpdate){
+      await axios.put('/api/instrutor', {
+        codigo: data!.codigo,
+        nome: data.nome,
+        cpf: data.cpf
+      })
+        .then(function (response) {
+          reset()
+          setAtualizaInstrutor(true)
+        })
+    }else{
+      await axios.post('/api/instrutor', {
+        nome: data.nome,
+        cpf: data.cpf
+      })
+        .then(function (response) {
+          reset()
+          setAtualizaInstrutor(true)
+        })
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={2}>
-        <Grid item xs={4} sm={4}>
-          <TextField
-            {...register("nome", { required: true })}
-            label="Nome"
-            variant="outlined"
-            error={errors.nome ? true : false}
-            helperText={errors.nome && "Campo obrigatório"}
-            color='secondary'
-            fullWidth
-          />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={2}>
+          <Grid item xs={4} sm={4}>
+            <TextField
+              {...register("nome", { required: true })}
+              label="Nome"
+              variant="outlined"
+              error={errors.nome ? true : false}
+              helperText={errors.nome && "Campo obrigatório"}
+              color='secondary'
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={4} sm={4}>
+            <TextField
+              {...register("cpf", { required: true })}
+              label="cpf"
+              variant="outlined"
+              color='secondary'
+              error={errors.cpf ? true : false}
+              helperText={errors.cpf && "Campo obrigatório"}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <ButtonBasic
+              type="submit"
+              variant="contained"
+              color="secondary"
+              texto='Enviar'
+              sx={{
+                height: '3.4rem'
+              }}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={4} sm={4}>
-          <TextField
-            {...register("cpf", { required: true })}
-            label="cpf"
-            variant="outlined"
-            color='secondary'
-            error={errors.cpf ? true : false}
-            helperText={errors.cpf && "Campo obrigatório"}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <ButtonBasic
-            type="submit" 
-            variant="contained" 
-            color="secondary"
-            texto='Enviar'
-            sx={{
-              height: '3.4rem'
-            }}
-          />
-        </Grid>
+      </form>
+      <Grid container sx={{
+          marginTop: '5rem'
+        }} >
+          <TableInstrutor setClickUpdate={setClickUpdate} resetForm={reset} setAttInstrutor={setAttInstrutor} atualizaInstrutor={atualizaInstrutor} setAtualizaInstrutor={setAtualizaInstrutor} />
       </Grid>
-    </form>
+    </>
+
   )
 }

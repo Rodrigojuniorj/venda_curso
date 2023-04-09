@@ -1,6 +1,7 @@
 const soap = require('soap')
 
 type Feedback = {
+  codigo?: string;
   nome: string;
   cpf: string
 }
@@ -25,12 +26,16 @@ export async function GET(request: Request) {
         reject(err)
       }
       else {
-        resolve(result.return)
+        try{
+          resolve(result.return)
+        }
+        catch (e) {
+          resolve([])
+        }
       }
     })
   })
 
-  console.log(result)
   return new Response(JSON.stringify(result), { status: 200 })
 }
 
@@ -40,13 +45,64 @@ export async function POST(request: Request) {
 
   const url = 'http://127.0.0.1:8080/instrutor-ws?wsdl'
 
-  soap.createClient(url, (err: any, client: any) => {
+  await soap.createClient(url, (err: any, client: any) => {
     if (err) {
       console.log(err)
     }
     else {
       client.salvarInstrutor({
         instrutor: {
+          nome,
+          cpf
+        }
+      }, (err: any, result: any) => {
+        if (err) {
+          console.log(err)
+        }
+      })
+    }
+  })
+
+  return new Response('Dados enviados com sucesso!', { status: 200 });
+}
+
+export async function DELETE(request: Request){
+  const codigo = request.url.split('codigo=')[1]
+  console.log(codigo)
+  const url = 'http://127.0.0.1:8080/instrutor-ws?wsdl'
+
+  await soap.createClient(url, (err: any, client: any) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      client.deleteInstrutor({
+        codigo: codigo
+      }, (err: any, result: any) => {
+        if (err) {
+          console.log(err)
+        }
+      })
+    }
+  })
+
+  return new Response('Dados enviados com sucesso!', { status: 200 });
+}
+
+export async function PUT(request: Request) {
+  const data: Feedback  = await request.json()
+  const { nome, cpf, codigo } = data
+
+  const url = 'http://127.0.0.1:8080/instrutor-ws?wsdl'
+
+  await soap.createClient(url, (err: any, client: any) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      client.editarInstrutor({
+        codigo: {
+          codigo,
           nome,
           cpf
         }
