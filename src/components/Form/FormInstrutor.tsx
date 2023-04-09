@@ -39,7 +39,8 @@ export function FormIntrutor({ setAtualizaInstrutor, atualizaInstrutor, setAttIn
     resolver: zodResolver(instrutorFormSchema),
     defaultValues: {
       nome: '',
-      cpf: ''
+      cpf: '',
+      codigo: undefined
     }
   })
 
@@ -51,8 +52,13 @@ export function FormIntrutor({ setAtualizaInstrutor, atualizaInstrutor, setAttIn
         cpf: data.cpf
       })
         .then(function (response) {
-          reset()
           setAtualizaInstrutor(true)
+          setClickUpdate(false)
+          reset({
+            nome: '',
+            cpf: '',
+            codigo: undefined
+          })
         })
     }else{
       await axios.post('/api/instrutor', {
