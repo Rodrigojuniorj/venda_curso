@@ -1,7 +1,5 @@
-import Grid from "@mui/material/Grid/Grid"
 import Box from "@mui/material/Box/Box"
 import { ReactNode } from 'react';
-import { TableInstrutor } from "../Table/TableInstrutor";
 
 interface FormsProps {
   children: ReactNode;
