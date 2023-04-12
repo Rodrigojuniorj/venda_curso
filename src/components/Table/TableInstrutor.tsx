@@ -21,7 +21,6 @@ type TableInstrutorData = {
 interface TableInstrutorProps {
   atualizaInstrutor: boolean;
   setAtualizaInstrutor: (state: boolean) => void;
-  setAttInstrutor: (Props: TableInstrutorData ) => void;
   resetForm: any,
   setClickUpdate: (props: boolean) => void;
 }

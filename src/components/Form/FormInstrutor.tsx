@@ -11,23 +11,16 @@ import { TableInstrutor } from '../Table/TableInstrutor';
 const instrutorFormSchema = z.object({
   codigo: z.number().optional(),
   nome: z.string().min(3, { message: 'O nome precisa ter pelomenos 3 letras' }),
-  cpf: z.string().min(3, { message: 'O cpf precisa ter pelomenos 3 letras' }),
+  cpf: z.string().min(3, { message: 'O cpf inválido' }),
 })
 export type InstrutorFormData = z.infer<typeof instrutorFormSchema>
-
-type InstrutorProps = {
-  codigo: number;
-  nome: string;
-  cpf: string;
-}
 
 interface FormInstrutorProps {
   atualizaInstrutor: boolean;
   setAtualizaInstrutor: (state: boolean) => void;
-  setAttInstrutor: (Props: InstrutorProps ) => void;
 }
 
-export function FormIntrutor({ setAtualizaInstrutor, atualizaInstrutor, setAttInstrutor }: FormInstrutorProps) {
+export function FormIntrutor({ setAtualizaInstrutor, atualizaInstrutor }: FormInstrutorProps) {
   const [clickUpdate, setClickUpdate] = useState(false);
 
   const {
@@ -114,7 +107,7 @@ export function FormIntrutor({ setAtualizaInstrutor, atualizaInstrutor, setAttIn
       <Grid container sx={{
           marginTop: '5rem'
         }} >
-          <TableInstrutor setClickUpdate={setClickUpdate} resetForm={reset} setAttInstrutor={setAttInstrutor} atualizaInstrutor={atualizaInstrutor} setAtualizaInstrutor={setAtualizaInstrutor} />
+          <TableInstrutor setClickUpdate={setClickUpdate} resetForm={reset} atualizaInstrutor={atualizaInstrutor} setAtualizaInstrutor={setAtualizaInstrutor} />
       </Grid>
     </>
 

@@ -44,7 +44,6 @@ function tabProps(index: number) {
 export default function BasicTabs() {
   const [value, setValue] = useState(0);
   const [atualizaInstrutor, setAtualizaInstrutor] = useState(false);
-  const [attInstrutor, setAttInstrutor] = useState<InstrutorFormData>()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -67,7 +66,7 @@ export default function BasicTabs() {
       </Box>
       <TabPanel value={value} index={0}>
         <Forms>
-          <FormIntrutor setAttInstrutor={setAttInstrutor} atualizaInstrutor={atualizaInstrutor} setAtualizaInstrutor={setAtualizaInstrutor} />
+          <FormIntrutor atualizaInstrutor={atualizaInstrutor} setAtualizaInstrutor={setAtualizaInstrutor} />
         </Forms>
       </TabPanel>
       <TabPanel value={value} index={1}>
