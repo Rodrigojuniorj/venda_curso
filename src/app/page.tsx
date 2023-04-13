@@ -8,6 +8,7 @@ import { FormIntrutor, InstrutorFormData } from '@/components/Form/FormInstrutor
 import { Grid } from '@mui/material';
 import { TableInstrutor } from '@/components/Table/TableInstrutor';
 import { FormCurso } from '@/components/Form/FormCurso';
+import { FormUsuario } from '@/components/Form/FormUsuario';
 
 interface TabPanelProps {
   children?: ReactNode;
@@ -46,6 +47,7 @@ export default function BasicTabs() {
   const [value, setValue] = useState(0);
   const [atualizaInstrutor, setAtualizaInstrutor] = useState(false);
   const [atualizaCurso, setAtualizaCurso] = useState(false);
+  const [atualizaUsuario, setAtualizaUsuario] = useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -77,7 +79,9 @@ export default function BasicTabs() {
         </Forms>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <Forms>
+          <FormUsuario atualizaUsuario={atualizaUsuario} setAtualizaUsuario={setAtualizaUsuario} />
+        </Forms>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item Three
