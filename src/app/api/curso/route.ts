@@ -60,9 +60,7 @@ export async function POST(request: Request) {
         curso: {
           cargaHoraria,
           instrutor: {
-            codigo: instrutor?.codigo,
-            cpf: instrutor?.cpf,
-            nome: instrutor?.nome
+            codigo: instrutor,
           },
           nome,
           precoUnitario
@@ -94,9 +92,7 @@ export async function PUT(request: Request) {
           codigo,
           cargaHoraria,
           instrutor: {
-            codigo: instrutor?.codigo,
-            cpf: instrutor?.cpf,
-            nome: instrutor?.nome
+            codigo: instrutor
           },
           nome,
           precoUnitario
